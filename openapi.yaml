@@ -1,0 +1,112 @@
+openapi: "3.0.3"
+info:
+  title: Belajar REST API
+  version: "1.0"
+servers:
+  - url: http://localhost:3306
+
+components:
+  schemas:
+    user:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        age:
+          type: integer
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+
+paths:
+  /users:
+    get:
+      description: "endpoint untuk mendapatkan semua data user"
+      responses:
+        "200":
+          description: Berhasil
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/user"
+        "500":
+          description: Server Gagal
+        "403":
+          description: Tidak diijinkan
+
+  /users/{id}:
+    get:
+      description: "endpoint untuk mendapatkan data user berdasarkan id"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Berhasil
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+        "500":
+          description: Server Gagal
+        "403":
+          description: Tidak diijinkan
+
+    delete:
+      description: "endpoint untuk menghapus data user berdasarkan id"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Berhasil
+        "500":
+          description: Server Gagal
+        "403":
+          description: Tidak diijinkan
+
+    put:
+      description: "endpoint untuk mengubah data user berdasarkan id"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                age:
+                  type: integer
+      responses:
+        "200":
+          description: Berhasil
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+        "500":
+          description: Server Gagal
+        "403":
+          description: Tidak diijinkan
